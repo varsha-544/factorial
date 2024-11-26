@@ -1,20 +1,21 @@
 const http = require('http');
- {
-    if (num < 0) return 'Factorial not defined for negative numbers';
-    let factorial = 1;
-    for (let i = 1; i <= num; i++) {
-        factorial *= i;
-    }
-    return factorial;
+function factorial(n) {
+  if (n === 0 || n === 1) {
+    return 1; 
+  }
+  return n * factorial(n - 1); 
 }
-const num = 5; 
+const number = 5; 
 const server = http.createServer((req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-
-    const result = calculateFactorial(num);
-    res.end(The factorial of ${num} is ${result});
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  if (number < 0) {
+    res.end("Please enter a valid non-negative integer.");
+  } else {
+    // Respond with the factorial result
+    const result = factorial(number);
+    res.end(`Factorial of ${number} is ${result}`);
+  }
 });
-server.listen(3020, () => {
-    console.log('Server is running on port 3020...');
-    console.log(The factorial of ${num} is ${calculateFactorial(num)});
+server.listen(3080, () => {
+  console.log("Server running at http://localhost:3080/");
 });
